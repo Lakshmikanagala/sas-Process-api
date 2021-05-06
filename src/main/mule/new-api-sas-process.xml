@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="557b2eed-4dd4-4265-bd9a-a29c585fd2b7" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="new-api-sas-processFlow" doc:id="0976a68b-cceb-4d28-ae3e-ce05302e4bc2" >
+		<http:listener doc:name="Listener" doc:id="b3e7a3fc-054e-47ff-923f-3eb47761f46b" config-ref="HTTP_Listener_config" path="/sas"/>
+		<ee:transform doc:name="Transform Message" doc:id="02014220-ad1e-4898-976f-287d0ec165b0" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<set-payload value='"sas process api"' doc:name="Set Payload" doc:id="75bfa88c-ed9c-4fea-a70e-2ac25cf674a4" />
+	</flow>
+</mule>
